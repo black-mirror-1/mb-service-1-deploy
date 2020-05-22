@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mb-service-1-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: mb-service-1-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mb-service-1-service
+  name: mb-service-1-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mb-service-1-service
+  template:
+    metadata:
+      labels:
+        app: mb-service-1-service
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: lifecycle
+                    operator: In
+                    values:
+                      - Ec2Spot
+              weight: 1
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: intent
+                    operator: In
+                    values:
+                      - devops-low-risk
+      containers:
+        - image: 'master-builder/sample-service-1:v1'
+          name: mb-service-1-service
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 1024m
+              memory: 512Mi
+            requests:
+              cpu: 1024m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+      tolerations:
+        - effect: PreferNoSchedule
+          key: spotInstance
+          operator: Equal
+          value: 'true'
