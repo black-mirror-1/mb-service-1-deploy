@@ -44,7 +44,8 @@ spec:
                     values:
                       - devops-low-risk
       containers:
-        - image: 'master-builder/sample-service-1:v1'
+        - image: >-
+            693885100167.dkr.ecr.us-east-2.amazonaws.com/master-builder/sample-service-1:v1
           name: mb-service-1-service
           ports:
             - containerPort: 8080
