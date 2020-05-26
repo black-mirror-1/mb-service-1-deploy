@@ -44,7 +44,7 @@ spec:
                     values:
                       - pre-prod-low-risk
       containers:
-        - image: 693885100167.dkr.ecr.us-east-2.amazonaws.com/master-builder/sample-service-1:V124
+        - image: 693885100167.dkr.ecr.us-east-2.amazonaws.com/master-builder/sample-service-1:d7041de5abef00c535a55962d10dba7086a067f9
           name: mb-service-1-service
           ports:
             - containerPort: 8080
