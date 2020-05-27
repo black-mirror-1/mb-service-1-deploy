@@ -10,21 +10,21 @@ spec:
     app: mb-service-1-pre-prod
   type: LoadBalancer
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1beta2
+kind: ReplicaSet
 metadata:
   labels:
-    app: mb-service-1-pre-prod
+    appName: mb-service-1-pre-prod
   name: mb-service-1-pre-prod
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: mb-service-1-pre-prod
+      appName: mb-service-1-pre-prod
   template:
     metadata:
       labels:
-        app: mb-service-1-pre-prod
+        appName: mb-service-1-pre-prod
     spec:
       affinity:
         nodeAffinity:
