@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mb-service-1-pre-prod
-  namespace: master-builder-pre-prod
+  namespace: ns-master-builder-1
 spec:
   ports:
     - port: 80
